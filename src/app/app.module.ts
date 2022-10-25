@@ -21,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductsHeaderComponent } from './pages/home/components/products-header/products-header.component';
+import { FiltersComponent } from './pages/home/components/filters/filters.component';
 
 
 
@@ -29,7 +30,8 @@ import { ProductsHeaderComponent } from './pages/home/components/products-header
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    ProductsHeaderComponent
+    ProductsHeaderComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,
