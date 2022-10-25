@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./products-header.component.css']
 })
 export class ProductsHeaderComponent implements OnInit {
-
+  sort = 'Descending';
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  onSortUpdated(newSort: string): void{
+    this.sort = newSort;
+  }
 }
