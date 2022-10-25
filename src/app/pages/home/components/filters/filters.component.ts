@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { outputAst } from '@angular/compiler';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.css']
+  styleUrls: ['./filters.component.css'],
 })
 export class FiltersComponent implements OnInit {
-  categories= ['shoes', 'sports']
-  constructor() { }
+  @Output() showCategory = new EventEmitter<string>();
+  categories = ['shoes', 'sports'];
+  constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  onShowCategory(category: string): void {
+    this.showCategory.emit(category);
   }
-
 }
