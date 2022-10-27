@@ -4,17 +4,73 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 }
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
+  template: `
+  <mat-drawer-container
+    [autosize]="true"
+    class="min-h-full max-w-7x1 mx-auto border-x"
+  >
+    <mat-drawer mode="side" opened class="p-6">
+      <app-filters (showCategory)="onShowCategory($event)"></app-filters>
+    </mat-drawer>
+    <mat-drawer-content class="p-6">
+      <app-products-header
+        (columnsCountChange)="onColumnsCountChange($event)"
+      ></app-products-header>
+      <mat-grid-list gutterSize="16" [cols]="cols" [rowHeight]="rowHeight">
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <app-product-box
+            class="w-full"
+            [fullWidthMode]="cols === 1"
+          ></app-product-box>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-drawer-content>
+  </mat-drawer-container>`,
 })
 export class HomeComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
   cols = 3;
   category: string | undefined;
-  rowHeight = ROWS_HEIGHT[this.cols]
+  rowHeight = ROWS_HEIGHT[this.cols];
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   onColumnsCountChange(colsNum: number): void {
     this.cols = colsNum;
     this.rowHeight = ROWS_HEIGHT[this.cols];

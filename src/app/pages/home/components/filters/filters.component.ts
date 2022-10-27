@@ -3,8 +3,18 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filters',
-  templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.css'],
+  template: `
+    <mat-expansion-panel *ngIf="categories">
+      <mat-expansion-panel-header>
+        <mat-panel-title>CATEGORIES</mat-panel-title></mat-expansion-panel-header
+      >
+      <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let category of categories" [value]="category">
+          <button (click)="onShowCategory(category)">{{ category }}</button>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-expansion-panel>
+  `
 })
 export class FiltersComponent implements OnInit {
   @Output() showCategory = new EventEmitter<string>();
