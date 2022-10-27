@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Cart } from 'src/app/models/cart.model';
 
 @Component({
   selector: 'app-header',
@@ -34,17 +35,30 @@ import { Component, OnInit } from '@angular/core';
           <button class="bg-rose-800 text-white rounded-full w-9 h-9">
             <mat-icon>remove_shopping_cart</mat-icon>
           </button>
-          <button class="bg-green-600 text-white rounded-full w-9 h-9">
+          <button
+            routerLink="/cart"
+            class="bg-green-600 text-white rounded-full w-9 h-9"
+          >
             <mat-icon>shopping_cart</mat-icon>
           </button>
         </div>
       </div>
     </mat-menu>
-  </mat-toolbar>
-  `,
+  </mat-toolbar> `,
 })
-export class HeaderComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class HeaderComponent{
+  constructor() { }
+  
+  private _cart: Cart = { items: [] }
+  itemsQuantity= 0;
+  
+  @Input() get cart(): Cart{
+    return this._cart;
+  }
+  set cart(cart: Cart) {
+    this._cart = cart;
+    this.itemsQuantity = cart.items
+      .map((item: { quantity: number; }) => item.quantity)
+      .reduce((prev: number,current: number)=> prev + current, 0)
+  }
 }
