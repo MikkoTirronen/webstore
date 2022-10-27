@@ -24,6 +24,7 @@ import { ProductsHeaderComponent } from './pages/home/components/products-header
 import { FiltersComponent } from './pages/home/components/filters/filters.component';
 import { ProductBoxComponent } from './pages/home/components/product-box/product-box.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { CartService } from './services/cart.service';
 
 
 
@@ -35,7 +36,7 @@ import { CartComponent } from './pages/cart/cart.component';
     ProductsHeaderComponent,
     FiltersComponent,
     ProductBoxComponent,
-    CartComponent
+    CartComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +54,9 @@ import { CartComponent } from './pages/cart/cart.component';
     MatBadgeModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CartService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
