@@ -1,3 +1,4 @@
+import { _isTestEnvironment } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
@@ -32,5 +33,10 @@ export class CartService {
   clearCart(): void{
     this.cart.next({ items: [] })
     this._snackBar.open('Cart Cleared!', 'Ok', { duration: 3000 });
+  }
+  removeFromCart(item:CartItem): void{
+    const filteredItems = this.cart.value.items.filter((_item) => _item.id != item.id)
+    this.cart.next({ items: filteredItems });
+    this._snackBar.open('Item removed from cart', 'Ok', { duration: 3000 });
   }
 }

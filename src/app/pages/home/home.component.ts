@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
   category: string | undefined;
   rowHeight = ROWS_HEIGHT[this.cols];
 
-  ngOnInit(): void {}
   onColumnsCountChange(colsNum: number): void {
     this.cols = colsNum;
     this.rowHeight = ROWS_HEIGHT[this.cols];
@@ -54,4 +53,5 @@ export class HomeComponent implements OnInit {
       id: product.id,
     });
   }
+  ngOnInit(): void {}
 }
