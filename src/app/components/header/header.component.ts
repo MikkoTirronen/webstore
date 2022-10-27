@@ -12,35 +12,28 @@ import { CartService } from 'src/app/services/cart.service';
       >
     </button>
     <mat-menu #menu="matMenu">
-      <div class="p-3 divide-y divide-solid">
+      <div class="p-4 divide-y divide-solid">
         <div class="pb-3 flex justify-between">
-          <span class="mr-16">{{ itemsQuantity }}</span>
-          <a routerLink="cart">View Cart</a>
+          <a routerLink="/cart">View Cart</a>
         </div>
         <div *ngIf="cart.items.length" class="py-3">
           <div
             *ngFor="let item of cart.items"
-            class="flex justify-between font-light mb-2"
+            class="flex justify-between font-light mb-2 pl-3"
           >
             {{ item.name }} x {{ item.quantity }}
-            <span class="font-bold">{{ item.price | currency }}</span>
-          </div>
-          <div class="flex justify-between font-light mb-2">
-            keyboard x 1<span class="font-bold">{{ '150' | currency }}</span>
-          </div>
-          <div class="flex justify-between font-light mb-2">
-            keyboard x 1<span class="font-bold">{{ '150' | currency }}</span>
-          </div>
-          <div class="flex justify-between font-light mb-2">
-            keyboard x 1<span class="font-bold">{{ '150' | currency }}</span>
+            <span class="font-bold px-3">{{ item.price | currency }}</span>
           </div>
         </div>
         <div class="text-right pb-3 py-3">
           Total:
-          <span class="font-bold ">{{ getTotal(cart.items) | currency }}</span>
+          <span class="font-bold px-3">{{ getTotal(cart.items) | currency }}</span>
         </div>
         <div class="pt-6 flex justify-between">
-          <button class="bg-rose-800 text-white rounded-full w-9 h-9">
+          <button
+            (click)="onClearCart()"
+            class="bg-rose-800 text-white rounded-full w-9 h-9"
+          >
             <mat-icon>remove_shopping_cart</mat-icon>
           </button>
           <button
@@ -54,7 +47,7 @@ import { CartService } from 'src/app/services/cart.service';
     </mat-menu>
   </mat-toolbar> `,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   private _cart: Cart = { items: [] };
@@ -72,4 +65,8 @@ export class HeaderComponent {
   getTotal(items: Array<CartItem>): number {
     return this.cartService.getTotal(items);
   }
+  onClearCart() {
+    this.cartService.clearCart();
+  }
+  ngOnInit(): void {}
 }
