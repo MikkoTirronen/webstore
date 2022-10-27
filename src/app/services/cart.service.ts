@@ -21,7 +21,9 @@ export class CartService {
       items.push(item);
     }
     this.cart.next({ items });
-    this._snackBar.open('1 item added to cart', 'Ok', { duration: 3000 });
+    this._snackBar.open(`${item.name} added to Cart!`, 'Ok', {
+      duration: 3000,
+    });
     console.log(this.cart.value);
   }
 
@@ -30,13 +32,21 @@ export class CartService {
       .map((item) => item.price * item.quantity)
       .reduce((prev, current) => prev + current, 0);
   }
-  clearCart(): void{
-    this.cart.next({ items: [] })
+  clearCart(): void {
+    this.cart.next({ items: [] });
     this._snackBar.open('Cart Cleared!', 'Ok', { duration: 3000 });
   }
-  removeFromCart(item:CartItem): void{
-    const filteredItems = this.cart.value.items.filter((_item) => _item.id != item.id)
+  removeFromCart(item: CartItem): void {
+    const filteredItems = this.cart.value.items.filter(
+      (_item) => _item.id != item.id
+    );
     this.cart.next({ items: filteredItems });
-    this._snackBar.open('Item removed from cart', 'Ok', { duration: 3000 });
+    this._snackBar.open(
+      `${item.name} x${item.quantity} removed from Cart`,
+      'Ok',
+      {
+        duration: 3000,
+      }
+    );
   }
 }

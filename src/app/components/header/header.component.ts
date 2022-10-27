@@ -21,13 +21,15 @@ import { CartService } from 'src/app/services/cart.service';
             *ngFor="let item of cart.items"
             class="flex justify-between font-light mb-2 pl-3"
           >
-            {{ item.name }} x {{ item.quantity }}
+            {{ item.name }} x{{ item.quantity }}
             <span class="font-bold px-3">{{ item.price | currency }}</span>
           </div>
         </div>
         <div class="text-right pb-3 py-3">
           Total:
-          <span class="font-bold px-3">{{ getTotal(cart.items) | currency }}</span>
+          <span class="font-bold px-3">{{
+            getTotal(cart.items) | currency
+          }}</span>
         </div>
         <div class="pt-6 flex justify-between">
           <button
