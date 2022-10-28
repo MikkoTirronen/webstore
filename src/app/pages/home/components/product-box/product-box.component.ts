@@ -1,50 +1,41 @@
-import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
-
 
 @Component({
   selector: 'app-product-box',
   template: `
-  <mat-card [ngClass]="{ 'text-center': !fullWidthMode }">
-    <div [ngClass]="{ flex: fullWidthMode }">
-      <img
-        src="https://via.placeholder.com/150"
-        alt="placeholder"
-        class="mb-1 mx-auto h-[200px]"
-        [ngClass]="{ 'h-200px': !fullWidthMode, 'h-[360px]': fullWidthMode }"
-      />
-      <div
-        class="w-full"
-        [ngClass]="{ 'px-8 flex flex-col justify-between': fullWidthMode }"
-      >
-        <div>
-          <h5>Shoes</h5>
-          <p class="truncate hover:whitespace-normal">Snickers</p>
-          <p *ngIf="fullWidthMode">Description</p>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-red-400">{{ '150' | currency }} </span
-          ><button (click)="onAddToCart()">
-            <mat-icon class="text-gray-500">shopping_cart</mat-icon>
-          </button>
+    <mat-card *ngIf="product" [ngClass]="{ 'text-center': !fullWidthMode }">
+      <div [ngClass]="{ flex: fullWidthMode }">
+        <img
+          [src]="product.image"
+          alt="product.title"
+          class="mb-1 mx-auto h-[200px]"
+          [ngClass]="{ 'h-200px': !fullWidthMode, 'h-[360px]': fullWidthMode }"
+        />
+        <div
+          class="w-full"
+          [ngClass]="{ 'px-8 flex flex-col justify-between': fullWidthMode }"
+        >
+          <div>
+            <h5>{{ product.category }}</h5>
+            <p class="truncate hover:whitespace-normal">{{product.title}}</p>
+            <p *ngIf="fullWidthMode">{{product.description}}</p>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-red-400">{{ product.price | currency }} </span
+            ><button (click)="onAddToCart()">
+              <mat-icon class="text-gray-500">shopping_cart</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </mat-card>
+    </mat-card>
   `,
 })
 export class ProductBoxComponent implements OnInit {
   constructor() {}
-
   @Input() fullWidthMode = false;
-  product: Product | undefined = {
-    id: 1,
-    title: 'Sneakers',
-    category: 'Shoes',
-    price: 150,
-    description: 'Some Fancy Pantsy Kicks!',
-    image: 'https://via.placeholder.com/150',
-  };
+  @Input() product: Product | undefined;
   @Output() addToCart = new EventEmitter();
 
   onAddToCart(): void {
