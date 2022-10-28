@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
+import { StoreService } from 'src/app/services/store.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
@@ -18,8 +20,9 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
         (columnsCountChange)="onColumnsCountChange($event)"
       ></app-products-header>
       <mat-grid-list gutterSize="16" [cols]="cols" [rowHeight]="rowHeight">
-        <mat-grid-tile>
+        <mat-grid-tile *ngFor="let product of products">
           <app-product-box
+            [product]="product"
             (addToCart)="onAddToCart($event)"
             class="w-full"
             [fullWidthMode]="cols === 1"
@@ -30,12 +33,19 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
     </mat-drawer-content>
   </mat-drawer-container>`,
 })
-export class HomeComponent implements OnInit {
-  constructor(private cartService: CartService) {}
+export class HomeComponent implements OnInit, OnDestroy {
+  constructor(
+    private cartService: CartService,
+    private storeService: StoreService
+  ) {}
 
   cols = 3;
   category: string | undefined;
   rowHeight = ROWS_HEIGHT[this.cols];
+  products: Array<Product> | undefined;
+  sort = 'desc';
+  count = '12';
+  productsSubsciption: Subscription | undefined;
 
   onColumnsCountChange(colsNum: number): void {
     this.cols = colsNum;
@@ -53,5 +63,19 @@ export class HomeComponent implements OnInit {
       id: product.id,
     });
   }
-  ngOnInit(): void {}
+  getProducts(): void {
+    this.productsSubsciption = this.storeService
+      .getAllProducts(this.count, this.sort)
+      .subscribe((_products: Product[] | undefined) => {
+        this.products = _products;
+      });
+  }
+  ngOnInit(): void {
+    this.getProducts();
+  }
+  ngOnDestroy(): void {
+    if (this.productsSubsciption) {
+      this.productsSubsciption.unsubscribe();
+    }
+  }
 }
