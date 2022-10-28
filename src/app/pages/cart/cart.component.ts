@@ -38,4 +38,10 @@ export class CartComponent implements OnInit {
       this.dataSource = this.cart.items;
     })
   }
+  onAddQuantity(item:CartItem): void { 
+    this.cartService.addToCart(item);
+  }
+  onSubtractQuantity(item: CartItem): void { 
+  this.cartService.subtractQuantity(item);
+  }
 }
