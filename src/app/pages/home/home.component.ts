@@ -18,6 +18,8 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
     <mat-drawer-content class="p-6">
       <app-products-header
         (columnsCountChange)="onColumnsCountChange($event)"
+        (itemsCountChange)="onItemsCountChange($event)"
+        (sortChange)="onSortChange($event)"
       ></app-products-header>
       <mat-grid-list gutterSize="16" [cols]="cols" [rowHeight]="rowHeight">
         <mat-grid-tile *ngFor="let product of products">
@@ -53,6 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   onShowCategory(newCategory: string): void {
     this.category = newCategory;
+    this.getProducts();
   }
   onAddToCart(product: Product): void {
     this.cartService.addToCart({
@@ -65,10 +68,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   getProducts(): void {
     this.productsSubsciption = this.storeService
-      .getAllProducts(this.count, this.sort)
+      .getAllProducts(this.count, this.sort, this.category)
       .subscribe((_products: Product[] | undefined) => {
         this.products = _products;
       });
+  }
+
+  onItemsCountChange(newCount: number): void{
+    this.count = newCount.toString();
+    this.getProducts()
+  }
+
+  onSortChange(newSort: string): void{
+    this.sort = newSort;
+    this.getProducts();
   }
   ngOnInit(): void {
     this.getProducts();
