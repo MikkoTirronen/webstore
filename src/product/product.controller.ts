@@ -7,24 +7,35 @@ import {
   Param,
   HttpException,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { Product } from './product.schema';
 import { ProductService } from './product.service';
 
-@Controller('products')
+@Controller()
 export class ProductController {
   constructor(private productService: ProductService) {}
   private readonly logger = new Logger(ProductController.name);
+
   @Get()
   async findAll(): Promise<Product[]> {
     return await this.productService.findAll();
   }
-  @Get('categories')
+  @Get('products?')
+  async find(
+    @Query('sort') sort: string,
+    @Query('limit') limit: number,
+  ): Promise<Product[]> {
+    console.log(sort, limit);
+    return await this.productService.findAllWithQuery(sort, limit);
+  }
+
+  @Get('products/categories')
   async findCategories(): Promise<Product[]> {
     return await this.productService.findCategories();
   }
 
-  @Get(':id')
+  @Get('products/:id')
   async findOne(@Param('id') id: number): Promise<Product | undefined | null> {
     this.logger.debug(`Searching for Todo with id: ${id}`);
     const product = await this.productService.findOne(id);
@@ -35,6 +46,19 @@ export class ProductController {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
 
+    return product;
+  }
+  @Get('products/category/:category?')
+  async getCategory(
+    @Param('category') category: string,
+    @Query('sort') sort: string,
+    @Query('limit') limit: number,
+  ): Promise<Product[] | undefined> {
+    const product = await this.productService.getCategory(
+      category,
+      sort,
+      limit,
+    );
     return product;
   }
 

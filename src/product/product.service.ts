@@ -21,7 +21,35 @@ export class ProductService {
   async findCategories(): Promise<Product[]> {
     return this.productModel.find().distinct('category').exec();
   }
+  async getCategory(
+    category: string,
+    sort: string,
+    limit: number,
+  ): Promise<Product[]> {
+    if (sort == 'desc') {
+      return this.productModel
+        .find()
+        .where({ category: category })
+        .limit(limit)
+        .sort({ title: 1 })
+        .exec();
+    } else {
+      return this.productModel
+        .find()
+        .where({ category: category })
+        .limit(limit)
+        .sort({ title: -1 })
+        .exec();
+    }
+  }
   async findAll(): Promise<Product[]> {
     return this.productModel.find().exec();
+  }
+  async findAllWithQuery(sort: string, limit: number): Promise<Product[]> {
+    if (sort == 'desc') {
+      return this.productModel.find().sort({ title: 1 }).limit(limit).exec();
+    } else {
+      return this.productModel.find().sort({ title: -1 }).limit(limit).exec();
+    }
   }
 }
