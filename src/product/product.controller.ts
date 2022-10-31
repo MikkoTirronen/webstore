@@ -11,29 +11,35 @@ import {
 import { Product } from './product.schema';
 import { ProductService } from './product.service';
 
-@Controller('product')
+@Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
   private readonly logger = new Logger(ProductController.name);
   @Get()
-  findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  async findAll(): Promise<Product[]> {
+    return await this.productService.findAll();
+  }
+  @Get('categories')
+  async findCategories(): Promise<Product[]> {
+    return await this.productService.findCategories();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Product | undefined | null> {
+  async findOne(@Param('id') id: number): Promise<Product | undefined | null> {
     this.logger.debug(`Searching for Todo with id: ${id}`);
-    const product = this.productService.findOne(id);
+    const product = await this.productService.findOne(id);
+
+    this.logger.debug(`Found product: ${JSON.stringify(product)}`);
+
     if (!product) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    } else {
-      this.logger.debug(`Found product: ${JSON.stringify(product)}`);
-      return product;
     }
+
+    return product;
   }
 
   @Post()
-  create(@Body() product: Product) {
+  async create(@Body() product: Product) {
     this.logger.debug(`New Product ${JSON.stringify(product)}`);
     this.productService.create(product);
   }

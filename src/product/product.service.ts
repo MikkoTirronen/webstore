@@ -18,6 +18,9 @@ export class ProductService {
     return createdProduct.save();
   }
 
+  async findCategories(): Promise<Product[]> {
+    return this.productModel.find().distinct('category').exec();
+  }
   async findAll(): Promise<Product[]> {
     return this.productModel.find().exec();
   }
