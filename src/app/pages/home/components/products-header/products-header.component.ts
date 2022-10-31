@@ -1,4 +1,4 @@
-import { Component, OnInit,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-products-header',
@@ -13,7 +13,7 @@ import { Component, OnInit,Output, EventEmitter } from '@angular/core';
           <button (click)="onSortUpdated('desc')" mat-menu-item>
             Descending
           </button>
-          <button (click)="onSortUpdated('asce')" mat-menu-item>
+          <button (click)="onSortUpdated('asc')" mat-menu-item>
             Ascending
           </button>
         </mat-menu>
@@ -61,5 +61,4 @@ export class ProductsHeaderComponent implements OnInit {
   onColumnsUpdated(colsNum: number): void {
     this.columnsCountChange.emit(colsNum);
   }
-  
 }
