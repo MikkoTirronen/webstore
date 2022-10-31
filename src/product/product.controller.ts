@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Post, Logger, Param } from '@nestjs/common';
-import { Product } from './product.interface';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Logger,
+  Param,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { Product } from './product.schema';
 import { ProductService } from './product.service';
 
 @Controller('product')
@@ -15,6 +24,9 @@ export class ProductController {
   findOne(@Param('id') id: number): Product | undefined {
     this.logger.debug(`Searching for Todo with id: ${id}`);
     const product = this.productService.findOne(id);
+    if (!product) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
     this.logger.debug(`Found product: ${JSON.stringify(product)}`);
     return product;
   }
