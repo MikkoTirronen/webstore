@@ -33,7 +33,9 @@ export class ProductService {
       image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
     },
   ];
-
+  findOne(id: number): Product | undefined {
+    return this.products.find((item) => item.id == id);
+  }
   create(product: Product) {
     this.products.push(product);
   }
