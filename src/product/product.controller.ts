@@ -10,4 +10,10 @@ export class ProductController {
   findAll(): Product[] {
     return this.productService.findAll();
   }
+
+  @Post()
+  create(@Body() product: Product) {
+    this.logger.debug(`New Product ${JSON.stringify(product)}`);
+    this.productService.create(product);
+  }
 }
