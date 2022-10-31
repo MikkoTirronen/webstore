@@ -16,19 +16,20 @@ export class ProductController {
   constructor(private productService: ProductService) {}
   private readonly logger = new Logger(ProductController.name);
   @Get()
-  findAll(): Product[] {
+  findAll(): Promise<Product[]> {
     return this.productService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Product | undefined {
+  findOne(@Param('id') id: number): Promise<Product | undefined | null> {
     this.logger.debug(`Searching for Todo with id: ${id}`);
     const product = this.productService.findOne(id);
     if (!product) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    } else {
+      this.logger.debug(`Found product: ${JSON.stringify(product)}`);
+      return product;
     }
-    this.logger.debug(`Found product: ${JSON.stringify(product)}`);
-    return product;
   }
 
   @Post()
