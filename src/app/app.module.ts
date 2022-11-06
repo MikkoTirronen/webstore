@@ -27,6 +27,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
 import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './pages/login/login/login.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     FiltersComponent,
     ProductBoxComponent,
     CartComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
