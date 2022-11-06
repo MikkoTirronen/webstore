@@ -28,6 +28,7 @@ import { CartService } from './services/cart.service';
 import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { LoginComponent } from './pages/login/login/login.component';
     MatSnackBarModule,
     MatGridListModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [CartService, StoreService],
   bootstrap: [AppComponent],
