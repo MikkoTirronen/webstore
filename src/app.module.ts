@@ -3,10 +3,10 @@ import { ProductController } from './product/product.controller';
 import { Product, ProductSchema } from './product/product.schema';
 import { ProductService } from './product/product.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './user/user/user.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/users.module';
+import { User, UserSchema } from './users/users.model';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { UsersModule } from './users/users.module';
       { name: User.name, schema: UserSchema },
     ]),
     AuthModule,
-    UsersModule,
+    UserModule,
   ],
   controllers: [ProductController],
   providers: [ProductService],
