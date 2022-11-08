@@ -14,7 +14,7 @@ export class UsersService {
       password,
     });
   }
-  async getUser(query: object): Promise<User> {
+  async getUser(query: object): Promise<User | null> {
     return this.userModel.findOne(query);
   }
 }
