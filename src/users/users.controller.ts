@@ -39,6 +39,23 @@ export class UsersController {
     );
     return result;
   }
+  @Get('/:id')
+  async getCart(@Param('id') id: any) {
+    const currentUser = await this.usersService.getUser({ id });
+    const cart: Array<CartItem> = currentUser?.tempCart as Array<CartItem>;
+    return cart;
+  }
+
+  @Patch('/:id')
+  async updateCart(
+    @Param('id') id: any,
+    @Body()
+    _tempCart: Array<CartItem>,
+  ) {
+    const tempData = _tempCart;
+    console.log(id, JSON.parse(JSON.stringify(tempData)));
+    return this.usersService.updateCart(id, _tempCart);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Post('/infom')
