@@ -92,4 +92,7 @@ export class CartService {
     const currentUser = this.jwtHelper.decodeToken(token!);
     return currentUser.sub;
   }
-  
+  getTempCartData() {
+    return this.httpClient.get(`/api/auth/${this.getUser()}`);
+  }
+}
