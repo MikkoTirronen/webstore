@@ -95,4 +95,12 @@ export class CartService {
   getTempCartData() {
     return this.httpClient.get(`/api/auth/${this.getUser()}`);
   }
+  updateTempCart() {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = this.getCart();
+    console.log(body);
+    return this.httpClient.patch(`/api/auth/${this.getUser()}`, body, {
+      headers,
+    });
+  }
 }
