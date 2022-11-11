@@ -10,8 +10,7 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   cart: Cart = {
-    items: [
-    ],
+    items: [],
   };
   displayedColumns: Array<string> = [
     'product',
@@ -24,13 +23,21 @@ export class CartComponent implements OnInit {
   dataSource: Array<CartItem> = [];
 
   getTotal(items: Array<CartItem>): number {
-    return this.cartService.getTotal(items)
+    return this.cartService.getTotal(items);
   }
   onClearCart(): void {
     this.cartService.clearCart();
   }
   onRemoveFromCart(item: CartItem): void {
-    this.cartService.removeFromCart(item)
+    this.cartService.removeFromCart(item);
+  }
+  getCartInfo() {
+    const data = this.cartService.getTempCartData().subscribe((res) => {
+      let mydata = JSON.parse(JSON.stringify(res));
+      mydata.map((item: CartItem) => {
+        this.cartService.addToCart(item);
+      });
+    });
   }
   ngOnInit(): void {
     this.cartService.cart.subscribe((_cart: Cart) => {
