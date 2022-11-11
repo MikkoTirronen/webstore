@@ -12,15 +12,15 @@ export class AuthService {
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   login(username: string, password: string) {
-    return (
-      this.http
-        .post<User>('api/auth/login', { username, password })
-        .pipe(
-          tap((data) => this.setSession(data)),
-          shareReplay()
-        )
+    return this.http.post<User>('api/auth/login', { username, password }).pipe(
+      tap((data) => this.setSession(data)),
+      shareReplay()
     );
-    //Rest of the Token Logic
+  }
+
+  signUp(username: string, password: string, name: string, telephone: number, address: string) {
+    return this.http.post<User>('api/auth/signup', { username, password,name,telephone,address }).pipe(
+    );
   }
 
   private setSession(authResult: any) {
@@ -48,8 +48,4 @@ export class AuthService {
     const expiresAt = JSON.parse(expiration!);
     return moment(expiresAt);
   }
-
-
-
-
 }
