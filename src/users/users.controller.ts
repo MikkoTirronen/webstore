@@ -39,6 +39,7 @@ export class UsersController {
     );
     return result;
   }
+  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async getCart(@Param('id') id: any) {
     const currentUser = await this.usersService.getUser({ id });
@@ -46,6 +47,7 @@ export class UsersController {
     return cart;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   async updateCart(
     @Param('id') id: any,
