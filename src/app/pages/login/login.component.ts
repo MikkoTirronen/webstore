@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  template: ` 
-  
-  <form [formGroup]="form">
+  template: ` <form [formGroup]="form">
     <fieldset>
       <legend>Login</legend>
       <div class="form-field">
         <label>Email:</label>
-        <input name="email" formControlName="email" />
+        <input name="username" formControlName="username" />
       </div>
       <div class="form-field">
         <label>Password:</label>
@@ -33,16 +32,16 @@ export class LoginComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   login() {
     const val = this.form.value;
-
-    if (val.email && val.password) {
-      this.authService.login(val.email, val.password).subscribe(() => {
+    console.log(val);
+    if (val.username && val.password) {
+      this.authService.login(val.username, val.password).subscribe(() => {
         console.log('User is logged in');
         this.router.navigateByUrl('/');
       });
