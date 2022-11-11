@@ -1,16 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Cart, CartItem } from 'src/app/models/cart.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-header',
   template: `<mat-toolbar class="max-w-7x1 mx-auto border-x justify-between">
-    <a routerLink="home">Welcome to My Store!</a>
+    <a routerLink="/">Welcome to My Store!</a>
+    <div class="min-w-6/12">
+      <button (click)="Login()">Login</button>
+    </div>
+    <div class="min-w-6/12">
+      <button (click)="LogOut()">Logout</button>
+    </div>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon [matBadge]="itemsQuantity" [matBadgeHidden]="!itemsQuantity"
         >shopping_cart</mat-icon
       >
     </button>
+
     <mat-menu #menu="matMenu">
       <div class="p-4 divide-y divide-solid">
         <div class="pb-3 flex justify-between">
@@ -50,7 +59,11 @@ import { CartService } from 'src/app/services/cart.service';
   </mat-toolbar> `,
 })
 export class HeaderComponent implements OnInit {
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   private _cart: Cart = { items: [] };
   itemsQuantity = 0;
@@ -69,6 +82,12 @@ export class HeaderComponent implements OnInit {
   }
   onClearCart() {
     this.cartService.clearCart();
+  }
+  LogOut() {
+    this.authService.logout();
+  }
+  Login() {
+    this.router.navigateByUrl("/login")
   }
   ngOnInit(): void {}
 }
