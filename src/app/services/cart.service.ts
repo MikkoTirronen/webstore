@@ -1,15 +1,24 @@
 import { _isTestEnvironment } from '@angular/cdk/platform';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { Cart, CartItem } from '../models/cart.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  cart = new BehaviorSubject<Cart>({ items: [] });
-  constructor(private _snackBar: MatSnackBar) {}
+  cart = new BehaviorSubject<Cart>({
+    items: [],
+  });
+
+  constructor(
+    private _snackBar: MatSnackBar,
+    private httpClient: HttpClient,
+    private jwtHelper: JwtHelperService
+  ) {}
 
   //addToCart, or increase quantity if already in cart.
   addToCart(item: CartItem): void {
@@ -25,7 +34,7 @@ export class CartService {
     this._snackBar.open(`${item.name} added to Cart!`, 'Ok', {
       duration: 3000,
     });
-    console.log(this.cart.value);
+    this.updateTempCart();
   }
 
   //Reduce total quantity of a specific item.
@@ -76,4 +85,6 @@ export class CartService {
     }
     return filteredItems;
   }
-}
+  getCart() {
+    return JSON.parse(JSON.stringify(this.cart.value.items));
+  }
