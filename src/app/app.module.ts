@@ -31,6 +31,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     ProductBoxComponent,
     CartComponent,
     LoginComponent,
+    ProfileComponent,
+    SignUpComponent,
+  
   ],
   imports: [
     BrowserModule,
