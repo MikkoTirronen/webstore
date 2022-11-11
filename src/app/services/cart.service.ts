@@ -46,7 +46,6 @@ export class CartService {
         _item.quantity--;
         if (_item.quantity === 0) {
           itemForRemoval = _item;
-
         }
       }
       return _item;
@@ -88,3 +87,9 @@ export class CartService {
   getCart() {
     return JSON.parse(JSON.stringify(this.cart.value.items));
   }
+  getUser() {
+    const token = localStorage.getItem('id_token');
+    const currentUser = this.jwtHelper.decodeToken(token!);
+    return currentUser.sub;
+  }
+  
