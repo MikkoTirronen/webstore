@@ -48,6 +48,7 @@ export class CartService {
           itemForRemoval = _item;
         }
       }
+      this.updateTempCart();
       return _item;
     });
     //removeFromCart without notifying this user
@@ -58,6 +59,7 @@ export class CartService {
     this._snackBar.open(`${item.name} x1 removed from Cart.`, 'Ok', {
       duration: 3000,
     });
+    this.updateTempCart()
   }
   //Get cart Total price.
   getTotal(items: Array<CartItem>): number {
@@ -70,18 +72,21 @@ export class CartService {
   clearCart(): void {
     this.cart.next({ items: [] });
     this._snackBar.open('Cart Cleared!', 'Ok', { duration: 3000 });
+    this.updateTempCart();
   }
   //Remove a specific item from the Cart regardless of quantity.
   removeFromCart(item: CartItem, notify = true): Array<CartItem> {
     const filteredItems = this.cart.value.items.filter(
       (_item) => _item.id != item.id
     );
+    
     if (notify) {
       this.cart.next({ items: filteredItems });
       this._snackBar.open(`${item.name} removed from Cart`, 'Ok', {
         duration: 3000,
       });
     }
+    this.updateTempCart();
     return filteredItems;
   }
   getCart() {
@@ -93,6 +98,7 @@ export class CartService {
     return currentUser.sub;
   }
   getTempCartData() {
+    console.log(this.getUser())
     return this.httpClient.get(`/api/auth/${this.getUser()}`);
   }
   updateTempCart() {
