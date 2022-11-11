@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Cart, CartItem } from 'src/app/models/cart.model';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
@@ -47,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   products: Array<Product> | undefined;
   sort = 'desc';
   count = '12';
-  productsSubsciption: Subscription | undefined;
+  productsSubscription: Subscription | undefined;
 
   onColumnsCountChange(colsNum: number): void {
     this.cols = colsNum;
@@ -65,30 +66,45 @@ export class HomeComponent implements OnInit, OnDestroy {
       quantity: 1,
       id: product.id,
     });
+    this.updateCartInfo();
   }
   getProducts(): void {
-    this.productsSubsciption = this.storeService
+    this.productsSubscription = this.storeService
       .getAllProducts(this.count, this.sort, this.category)
       .subscribe((_products: Product[] | undefined) => {
         this.products = _products;
       });
   }
-
-  onItemsCountChange(newCount: number): void{
+  getCartInfo() {
+    const data = this.cartService.getTempCartData().subscribe((res) => {
+      let mydata = JSON.parse(JSON.stringify(res));
+      mydata.map((item: CartItem) => {
+        this.cartService.addToCart(item);
+      });
+    });
+  }
+  updateCartInfo() {
+    const data = this.cartService.updateTempCart().subscribe((res) => {
+      console.log(res);
+    });
+  }
+  onItemsCountChange(newCount: number): void {
     this.count = newCount.toString();
-    this.getProducts()
+    this.getProducts();
   }
 
-  onSortChange(newSort: string): void{
+  onSortChange(newSort: string): void {
     this.sort = newSort;
     this.getProducts();
   }
+
   ngOnInit(): void {
     this.getProducts();
+    this.getCartInfo();
   }
   ngOnDestroy(): void {
-    if (this.productsSubsciption) {
-      this.productsSubsciption.unsubscribe();
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
     }
   }
 }
