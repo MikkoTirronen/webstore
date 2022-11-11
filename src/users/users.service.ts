@@ -36,22 +36,18 @@ export class UsersService {
   async getUser(query: object): Promise<User | null> {
     return this.userModel.findOne(query);
   }
-  async updateCart(_id: string, cartData: any) {
-    console.log('HERE is the TempCart', cartData);
-    const myData: any = [];
 
-    for (const key in cartData) {
-      myData.push(cartData[key]);
-    }
-    console.log('Here is the new array', myData[0]);
+  async updateCart(id: string, cartData: any) {
+    const getUser = await this.userModel.findById({ _id: id });
+    console.log('this should be the user', getUser);
+
     const replaceDate = await this.userModel
       .findByIdAndUpdate(
-        { _id: '636dbd6908dfc2da92e66ed1' },
+        { _id: id },
         {
-          tempCart: myData[0],
+          tempCart: cartData,
         },
         {
-          overwrite: true,
           new: true,
         },
       )
