@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/MikkoTirronen/webstore#readme",
   "workspaces": [
-    "packages/*"
+    "packages\\frontend",
+    "packages\\backend"
   ]
 }

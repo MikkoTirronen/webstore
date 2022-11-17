@@ -1,7 +1,7 @@
 {
   "name": "nestjs-webstore-backend",
   "version": "0.0.1",
-  "description": "",
+  "description": "<<<<<<< HEAD\r # Webstore",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -81,5 +81,17 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikkoTirronen/webstore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MikkoTirronen/webstore/issues"
+  },
+  "homepage": "https://github.com/MikkoTirronen/webstore#readme"
 }
