@@ -1,0 +1,5 @@
+packages/frontend/node_modules
+packages/frontend/.angular
+backend/node_modules
+backend/dist
+node_modules
