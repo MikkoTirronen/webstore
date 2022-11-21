@@ -26,3 +26,23 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   controllers: [AuthController],
 })
 export class AuthModule {}
+
+// imports: [
+//     ConfigModule.forRoot({
+//       envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV}`,
+//       load: [redisConfig],
+//       cache: true,
+//       isGlobal: true,
+//     }),
+//     UserModule,
+//     PassportModule,
+//     JwtModule.registerAsync({
+//       imports: [ConfigModule],
+//       useFactory: async (configService: ConfigService) => ({
+//         secretOrPrivateKey: configService.get<string>('JWT_SECRET_KEY'),
+//         signOptions: {
+//           expiresIn: 3600,
+//         },
+//       }),
+//       inject: [ConfigService],
+//     }),

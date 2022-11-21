@@ -16,3 +16,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return { userId: payload.sub, username: payload.username };
   }
 }
+
+// export class JwtStrategy extends PassportStrategy(Strategy) {
+//   secret = this.configService.get<string>('redis.host');
+//   constructor(private readonly configService: ConfigService) {
+//     super({
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       ignoreExpiration: false,
+//       secretOrKey: configService.get<string>('redis.JWT_SECRET_KEY'),
+//     });
+//   }
