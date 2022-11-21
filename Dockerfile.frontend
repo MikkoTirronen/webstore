@@ -1,6 +1,6 @@
-FROM node:alpine
+FROM node:alpine AS build
 
-WORKDIR /webshop/src/app
+WORKDIR /webshop/
 
 COPY ./package*.json ./
 COPY ./packages/frontend/package*.json ./packages/frontend/
@@ -9,10 +9,12 @@ RUN npm ci -w packages\/\frontend
 
 COPY ./packages/frontend/ ./packages/frontend/
 
+ARG WEBSHOP_API_URL
+ENV APP_WEBSHOP_API_URL={WEBSHOP_API_URL}
+
 RUN npm run build -w packages\/\frontend
 
-EXPOSE 3000
-
-CMD [ "npx", "serve", "frontend/dist" ]
+FROM nginx:alpine
+COPY --from=build /webshop/packages/frontend/dist/webstore /usr/share/nginx/html
 
 
