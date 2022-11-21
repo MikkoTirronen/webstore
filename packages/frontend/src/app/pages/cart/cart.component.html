@@ -6,7 +6,7 @@
                 <img src="{{element.product}}" alt="product" class="w-[100px] my-5"/>
             </td>
             <td mat-footer-cell *matFooterCellDef>
-                <button mat-raised-button routerLink="/home">Continue Shopping</button>
+                <button mat-raised-button routerLink="/" (click)="onClearCart()">Continue Shopping</button>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
